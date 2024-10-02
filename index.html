@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mot de passe aléatoire</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Entrée du mot de passe</h1>
+        <p>Veuillez entrer le mot de passe généré :</p>
+        <input type="password" id="passwordInput" placeholder="Entrez le mot de passe" autofocus>
+        <button onclick="verifyPassword()">Vérifier</button>
+        <p id="message"></p>
+        <div id="info">
+            <p id="generatedPassword">Mot de passe généré : </p>
+            <p id="timeElapsed">Temps écoulé : 0 secondes</p>
+        </div>
+    </div>
+
+    <script>
+        let generatedPassword = Math.random().toString(36).slice(-8);  // Génère un mot de passe aléatoire
+        let startTime = new Date().getTime();
+        
+        document.getElementById('generatedPassword').innerText = `Mot de passe généré : ${generatedPassword}`;
+
+        function updateChrono() {
+            let currentTime = new Date().getTime();
+            let timeElapsed = Math.floor((currentTime - startTime) / 1000);
+            document.getElementById('timeElapsed').innerText = `Temps écoulé : ${timeElapsed} secondes`;
+        }
+
+        // Appel de la fonction updateChrono toutes les secondes
+        setInterval(updateChrono, 1000);
+
+        function verifyPassword() {
+            let inputPassword = document.getElementById('passwordInput').value;
+            let currentTime = new Date().getTime();
+            let timeElapsed = Math.floor((currentTime - startTime) / 1000);
+
+            if (inputPassword === generatedPassword) {
+                document.getElementById('message').innerText = "Mot de passe correct!";
+                document.getElementById('message').style.color = "green";
+            } else {
+                document.getElementById('message').innerText = "Mot de passe incorrect!";
+                document.getElementById('message').style.color = "red";
+            }
+
+            document.getElementById('timeElapsed').innerText = `Temps écoulé : ${timeElapsed} secondes`;
+        }
+    </script>
+</body>
+</html>
